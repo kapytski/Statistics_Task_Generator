@@ -1,7 +1,10 @@
 task.2.1<-function(){
   
+  # условие задачи со слотами
   cond<-paste0("Вероятность того, что начинающая медсестра при проведении инъекции попадёт в вену с первого раза составляет ##slot_1##.",
                "Найти вероятность того, что при проведении аттестации данной медсестры удачными будут ##slot_2## из ##slot_3## инъекций.")
+  
+  # генеретор случайных чисел
   rnd<-function(){
     p<-round(runif(1,0.6,0.9),2)
     m<-sample(5:9,1)
@@ -9,6 +12,7 @@ task.2.1<-function(){
     c(p=p,m=m,n=n)
   }
   
+  # правильный ответ
   sol<-function(x){
     round(dbinom(x['m'],x['n'],x['p']),4)
   }
@@ -17,6 +21,7 @@ task.2.1<-function(){
   
   right.answer<-sol(x)
   
+  # получение текстового условия - вставка в слоты случайных значений от генератора
   task<-function(){
     # task.numbers<-c("i"=4,"j"=7)
     foo<-function(i,cond){sub(paste0("##slot_",i,"##"),x[i],cond)}
@@ -28,7 +33,10 @@ task.2.1<-function(){
   }
   
   
+  # получение неправильных ответов
   get.bad.anwers<-function(x){
+    
+    # функция для получения набора случайных ответов, отличающихся от верного (х) более чем на 15%
     foo<-function(){
       r<-runif(10,min=0, max=1)
       r<-sort(r[which(abs(r-x)/x>0.15)])
@@ -39,7 +47,8 @@ task.2.1<-function(){
     sort(sample(temp,6))
   }
   
- 
+  
+  # округление, соединение и форматирование всех ответов: верного и неверного
   answers<-function(){
     
     bad.anwers<-get.bad.anwers(right.answer)
@@ -57,6 +66,7 @@ task.2.1<-function(){
     # cat(res) 
   }
   
+  # вывод полученного списка
   list(condition=task(),answers=answers(),right.answer=right.answer)
   
 }
