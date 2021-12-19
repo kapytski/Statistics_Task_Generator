@@ -23,7 +23,6 @@ task.2.1<-function(){
   
   # получение текстового условия - вставка в слоты случайных значений от генератора
   task<-function(){
-    # task.numbers<-c("i"=4,"j"=7)
     foo<-function(i,cond){sub(paste0("##slot_",i,"##"),x[i],cond)}
     res<-foo(1,cond)
     if(length(x)>1){
